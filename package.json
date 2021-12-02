@@ -1,0 +1,23 @@
+{
+  "name": "node-string-factory",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamesNgo-CoT/node-string-factory.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JamesNgo-CoT/node-string-factory/issues"
+  },
+  "homepage": "https://github.com/JamesNgo-CoT/node-string-factory#readme",
+  "devDependencies": {
+    "eslint": "^8.3.0"
+  }
+}
