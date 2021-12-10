@@ -6,8 +6,8 @@ function expIf(condition, trueValue, falseValue) {
 	return exp(`${condition} ? ${trueValue} : ${falseValue}`);
 }
 
-function expLoop(loopExp, body) {
-	return exp(`() => { const value = []; for(${loopExp}) { value.push(${body}); } return value.join(''); }`);
+function expLoop(loopExp, body, joiner = '') {
+	return exp(`() => { const value = []; for(${loopExp}) { value.push(${body}); } return value.join(${joiner}); }`);
 }
 
 function func(args, body) {
