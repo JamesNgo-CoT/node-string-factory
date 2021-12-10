@@ -23,6 +23,10 @@ function quote(value, quote = '`') {
 		value = value.join('');
 	}
 
+	if (typeof value !== 'string') {
+		value = String(value);
+	}
+
 	const exps = [];
 	value = value
 		.replace(new RegExp('{{ (.+?) }}', 'g'), (match, p1) => {
