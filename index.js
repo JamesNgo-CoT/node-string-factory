@@ -3,11 +3,11 @@ function exp(value) {
 }
 
 function expIf(condition, trueValue, falseValue) {
-	return exp(`${condition} ? ${quote(trueValue)} : ${quote(falseValue)}`);
+	return exp(`${condition} ? ${trueValue} : ${falseValue}`);
 }
 
 function expLoop(loopExp, body) {
-	return exp(`() => { const value = []; for(${loopExp}) { value.push(${quote(body)}); } return value.join(''); }`);
+	return exp(`() => { const value = []; for(${loopExp}) { value.push(${body}); } return value.join(''); }`);
 }
 
 function func(args, body) {
@@ -15,7 +15,7 @@ function func(args, body) {
 		args = args.filter((child) => child !== null).join(', ');
 	}
 
-	return `(${args || ''}) => ${quote(body)}`;
+	return `(${args || ''}) => ${body}`;
 }
 
 function quote(value, quote = '`') {
