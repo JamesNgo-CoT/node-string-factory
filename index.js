@@ -52,12 +52,12 @@ function tag(tag, attrs, children) {
 
 	const openTag = `<${openTagContents.join(' ')}>`;
 
-	if (Array.isArray(children)) {
-		children = children.filter((child) => child !== null).join('');
-	}
-
 	if (children === undefined || children === null) {
 		return openTag;
+	}
+
+	if (Array.isArray(children)) {
+		children = children.filter((child) => child !== null).join('');
 	}
 
 	return `${openTag}${children}</${tag}>`;
