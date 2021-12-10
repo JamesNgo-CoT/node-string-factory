@@ -6,8 +6,10 @@ function expIf(condition, trueValue, falseValue) {
 	return exp(`${condition} ? ${trueValue} : ${falseValue}`);
 }
 
+let expLoopValueConstantCounter = 0;
 function expLoop(loopExp, body, joiner = '') {
-	return exp(`() => { const value = []; for(${loopExp}) { value.push(${body}); } return value.join(${joiner}); }`);
+	const expLoopValueConstant = `expLoopValue${expLoopValueConstantCounter++}`;
+	return exp(`(() => { const ${expLoopValueConstant} = []; for(${loopExp}) { ${expLoopValueConstant}.push(${body}); } return ${expLoopValueConstant}.join(${quote(joiner)}); })()`);
 }
 
 function func(args, body) {
