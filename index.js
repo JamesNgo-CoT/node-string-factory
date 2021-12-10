@@ -53,7 +53,7 @@ function tag(tag, attrs, children) {
 	const openTag = `<${openTagContents.join(' ')}>`;
 
 	if (Array.isArray(children)) {
-		children = children.join('');
+		children = children.filter((child) => child !== null).join('');
 	}
 
 	if (children === undefined || children === null) {
@@ -63,4 +63,13 @@ function tag(tag, attrs, children) {
 	return `${openTag}${children}</${tag}>`;
 }
 
-module.exports = { exp, expIf, expLoop, func, quote, tag };
+function table(attrs, caption, thead, tbody, tfoot) {
+	return tag('table', attrs, [
+		tag('caption', {}, caption),
+		thead ? tag('thead', {}, thead) : null,
+		tag('tbody', {}, tbody),
+		tfoot ? tag('tfoot', {}, tfoot) : null
+	]);
+}
+
+module.exports = { exp, expIf, expLoop, func, quote, table, tag };

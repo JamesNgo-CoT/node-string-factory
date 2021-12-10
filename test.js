@@ -1,4 +1,4 @@
-const { exp, expIf, func, tag } = require('./index');
+const { exp, expIf, func, tag, table } = require('./index');
 
 const content = [
 	tag('!DOCTYPE', { html: null }),
@@ -10,7 +10,35 @@ const content = [
 			tag('title', {}, exp('title'))
 		]),
 		tag('body', {}, [
-			expIf('title', exp('title'), '')
+			expIf('title', exp('title'), ''),
+			table({}, 'CAPTION', [
+				tag('tr', {}, [
+					tag('th', { scope: 'col' }, 'HEADER 1'),
+					tag('th', { scope: 'col' }, 'HEADER 2'),
+					tag('th', { scope: 'col' }, 'HEADER 3'),
+					tag('th', { scope: 'col' }, 'HEADER 4')
+				])
+			], [
+				tag('tr', {}, [
+					tag('th', { scope: 'row' }, 'DATA 1'),
+					tag('td', {}, 'DATA 2'),
+					tag('td', {}, 'DATA 3'),
+					tag('td', {}, 'DATA 4')
+				]),
+				tag('tr', {}, [
+					tag('th', { scope: 'row' }, 'DATA 1'),
+					tag('td', {}, 'DATA 2'),
+					tag('td', {}, 'DATA 3'),
+					tag('td', {}, 'DATA 4')
+				])
+			], [
+				tag('tr', {}, [
+					tag('td', {}, ''),
+					tag('td', {}, 'FOOTER 2'),
+					tag('td', {}, 'FOOTER 3'),
+					tag('td', {}, 'FOOTER 4')
+				])
+			])
 		])
 	])
 ];
