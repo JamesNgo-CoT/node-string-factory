@@ -10,8 +10,12 @@ function expLoop(loopExp, body) {
 	return exp(`() => { const value = []; for(${loopExp}) { value.push(${quote(body)}); } return value.join(''); }`);
 }
 
-function func(body, args = []) {
-	return `(${args.join(', ')}) => ${quote(body)}`;
+function func(args, body) {
+	if (Array.isArray(args)) {
+		args = args.filter((child) => child !== null).join(', ');
+	}
+
+	return `(${args || ''}) => ${quote(body)}`;
 }
 
 function quote(value, quote = '`') {
