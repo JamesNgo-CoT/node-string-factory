@@ -59,6 +59,24 @@ const content = table({ border: 1, cellpadding: 0, cellspacing: 0 }, 'CAPTION', 
 console.log(content); // <table border="1" cellpadding="0" cellspacing="0"><caption>CAPTION</caption><thead><tr><th scope="col">HEADER 1</th><th scope="col">HEADER 2</th><th scope="col">HEADER 3</th></tr></thead><tbody><tr><th scope="row">HEADER 1</th><td>DATA 2</td><td>DATA 3</td></tr><tr><th scope="row">HEADER 1</th><td>DATA 2</td><td>DATA 3</td></tr></tbody><tfoot><tr><td></td><td>FOOTER 2</td><td>FOOTER 3</td></tr></tfoot></table>
 ```
 
+### style
+
+``` JavaScript
+const content = tag('style', { title: 'Alt Style' }, 	style({
+  '@media all': {
+    'body': {
+      'color': 'inherit',
+      'font-size': '1rem'
+    },
+    'p': {
+      'line-height': 1
+    }
+  }
+}));
+
+console.log(content); // <style title="Alt Style">@media all { body { color: inherit; font-size: 1rem; } p { line-height: 1; } }</style>
+```
+
 ### quote
 
 ``` JavaScript
@@ -122,7 +140,7 @@ console.log(content); // (data) => `<div class="class-name"><div>${data ? data :
 ``` JavaScript
 const content = func(['data'], quote([
   tag('div', { class: 'class-name' }, [
-    tag('div', {}, [
+    tag('div', [`data-count=${exp('data.length')}`], [
       expLoop('let index = 0, length = data.length; index < length; index++', [
         'data[index]'
       ], ', ')
@@ -130,5 +148,5 @@ const content = func(['data'], quote([
   ])
 ]));
 
-console.log(content); // (data) => `<div class="class-name"><div>${(() => { const expLoopValue0 = []; for(let index = 0, length = data.length; index < length; index++) { expLoopValue0.push(data[index]); } return expLoopValue0.join(`, `); })()}</div></div>`
+console.log(content); // (data) => `<div class="class-name"><div data-count=${data.length}>${(() => { const expLoopValue0 = []; for(let index = 0, length = data.length; index < length; index++) { expLoopValue0.push(data[index]); } return expLoopValue0.join(`, `); })()}</div></div>`
 ```

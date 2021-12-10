@@ -1,25 +1,3 @@
-function exp(value) {
-	return `{{ ${value} }}`;
-}
-
-function expIf(condition, trueValue, falseValue) {
-	return exp(`${condition} ? ${trueValue} : ${falseValue}`);
-}
-
-let expLoopValueConstantCounter = 0;
-function expLoop(loopExp, body, joiner = '') {
-	const expLoopValueConstant = `expLoopValue${expLoopValueConstantCounter++}`;
-	return exp(`(() => { const ${expLoopValueConstant} = []; for(${loopExp}) { ${expLoopValueConstant}.push(${body}); } return ${expLoopValueConstant}.join(${quote(joiner)}); })()`);
-}
-
-function func(args, body) {
-	if (Array.isArray(args)) {
-		args = args.filter((child) => child !== null).join(', ');
-	}
-
-	return `(${args || ''}) => ${body}`;
-}
-
 function quote(value, quote = '`') {
 	if (Array.isArray(value)) {
 		value = value.join('');
@@ -51,11 +29,19 @@ function quote(value, quote = '`') {
 function tag(tag, attrs, children) {
 	const openTagContents = [tag];
 	if (attrs) {
-		for (const key in attrs) {
-			if (attrs[key] === null) {
-				openTagContents.push(key);
-			} else {
-				openTagContents.push(`${key}=${quote(attrs[key], '"')}`);
+		if (Array.isArray(attrs)) {
+			attrs = attrs.join(' ');
+		}
+
+		if (typeof attrs === 'string') {
+			openTagContents.push(attrs);
+		} else {
+			for (const key in attrs) {
+				if (attrs[key] === null) {
+					openTagContents.push(key);
+				} else {
+					openTagContents.push(`${key}=${quote(attrs[key], '"')}`);
+				}
 			}
 		}
 	}
@@ -82,4 +68,60 @@ function table(attrs, caption, thead, tbody, tfoot) {
 	]);
 }
 
-module.exports = { exp, expIf, expLoop, func, quote, table, tag };
+function style(properties) {
+	function processProperties(properties) {
+		const value = [];
+
+		for (const key in properties) {
+			let property = properties[key];
+
+			if (!property) {
+				continue;
+			}
+
+			if (Array.isArray(property)) {
+				if (key === 'font-family') {
+					property = property.join(', ');
+				} else {
+					property = property.join(' ');
+				}
+			}
+
+			if (typeof property === 'object') {
+				value.push(`${key} {`);
+				value.push(...processProperties(property));
+				value.push('}');
+			} else {
+				value.push(`${key}: ${property};`);
+			}
+		}
+
+		return value;
+	}
+
+	return processProperties(properties).join(' ');
+}
+
+function func(args, body) {
+	if (Array.isArray(args)) {
+		args = args.filter((child) => child !== null).join(', ');
+	}
+
+	return `(${args || ''}) => ${body}`;
+}
+
+function exp(value) {
+	return `{{ ${value} }}`;
+}
+
+function expIf(condition, trueValue, falseValue) {
+	return exp(`${condition} ? ${trueValue} : ${falseValue}`);
+}
+
+let expLoopValueConstantCounter = 0;
+function expLoop(loopExp, body, joiner = '') {
+	const expLoopValueConstant = `expLoopValue${expLoopValueConstantCounter++}`;
+	return exp(`(() => { const ${expLoopValueConstant} = []; for(${loopExp}) { ${expLoopValueConstant}.push(${body}); } return ${expLoopValueConstant}.join(${quote(joiner)}); })()`);
+}
+
+module.exports = { exp, expIf, expLoop, func, quote, style, table, tag };

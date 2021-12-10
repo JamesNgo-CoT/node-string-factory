@@ -1,4 +1,4 @@
-const { exp, expIf, expLoop, func, quote, table, tag } = require('./index');
+const { exp, expIf, expLoop, func, quote, style, table, tag } = require('./index');
 
 ////////////////////////////////////////////////////////////////////////////////
 // TAG
@@ -49,6 +49,28 @@ const { exp, expIf, expLoop, func, quote, table, tag } = require('./index');
 			tag('td', {}, 'FOOTER 3')
 		])
 	]);
+
+	console.log(content);
+})();
+
+////////////////////////////////////////////////////////////////////////////////
+// STYLE
+////////////////////////////////////////////////////////////////////////////////
+
+(() => {
+	console.log('\x1b[36mSTYLE\x1b[0m');
+
+	const content = tag('style', { title: 'Alt Style' }, 	style({
+		'@media all': {
+			'body': {
+				'color': 'inherit',
+				'font-size': '1rem'
+			},
+			'p': {
+				'line-height': 1
+			}
+		}
+	}));
 
 	console.log(content);
 })();
@@ -136,7 +158,7 @@ const { exp, expIf, expLoop, func, quote, table, tag } = require('./index');
 
 	const content = func(['data'], quote([
 		tag('div', { class: 'class-name' }, [
-			tag('div', {}, [
+			tag('div', [`data-count=${exp('data.length')}`], [
 				expLoop('let index = 0, length = data.length; index < length; index++', [
 					'data[index]'
 				], ', ')
