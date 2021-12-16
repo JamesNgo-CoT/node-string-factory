@@ -2,6 +2,8 @@
 
 Version 2.1.0
 
+:warning: __This has been deprecated__, see https://github.com/JamesNgo-CoT/string-factory
+
 ## Installation
 
 ```
