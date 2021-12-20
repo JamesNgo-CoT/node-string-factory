@@ -2,12 +2,12 @@
 
 Version 2.2.0
 
-:warning: __This has been deprecated__, see https://github.com/JamesNgo-CoT/string-factory
+:warning: __This has been deprecated__, see [JamesNgo-CoT/string-factory](https://github.com/JamesNgo-CoT/string-factory)
 
 ## Installation
 
 ```
-npm install git+https://github.com/JamesNgo-CoT/node-string-factory.git#2.1.0
+npm install git+https://github.com/JamesNgo-CoT/node-string-factory.git#2.2.0
 ```
 
 ## Usage
